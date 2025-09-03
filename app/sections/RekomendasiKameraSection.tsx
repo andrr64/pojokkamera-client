@@ -1,4 +1,4 @@
-import ProductItem from "../components/ProductItem";
+import ProductItem from "../components/items/ProductItem";
 
 export default function RekomendasiKameraSection() {
     const products = [
