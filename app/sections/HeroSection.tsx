@@ -24,9 +24,9 @@ export default function HeroSection() {
   return (
     <section
       id="section-hero"
-      className="relative min-h-screen w-full flex flex-col items-start font-normal transition-colors duration-500"
+      className="relative  md:min-h-screen w-full flex flex-col items-start font-normal transition-colors duration-500"
     >
-      <div className="pt-30 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-20 xl:px-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+      <div className="pt-24 mb-12 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-20 xl:px-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
 
         {/* LEFT SECTION */}
         <div className="flex-1 max-w-xl lg:max-w-2xl space-y-6 text-center md:text-left">

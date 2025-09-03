@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { webRoute } from "@/route/web_route";
 
-// Menu navigasi khusus Pojok Kamera
 const menuItems = [
     { menu: "Beranda", link: "/" },
     { menu: "Lensa & Kamera", link: "#section-gear" },
@@ -25,14 +24,6 @@ export default function Header() {
             <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
                 {/* Logo */}
                 <a href="/" className="flex items-center space-x-3">
-                    {/* {mounted && (
-                        <Image
-                            src={resolvedTheme === "dark" ? whiteLogo : blackLogo}
-                            alt="Pojok Kamera"
-                            width={40}
-                            height={40}
-                        />
-                    )} */}
                     <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
                         LOGO
                     </span>
@@ -43,7 +34,8 @@ export default function Header() {
                     <ul className="font-medium flex space-x-8">
                         {menuItems.map((item) => (
                             <li key={item.menu}>
-                                <a href={item.link}
+                                <a
+                                    href={item.link}
                                     className="relative text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group"
                                 >
                                     {item.menu}
@@ -90,6 +82,14 @@ export default function Header() {
                             )}
                         </button>
                     )}
+
+                    {/* Login Button */}
+                    <a
+                        href={webRoute.login}
+                        className="hidden md:inline-block bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-full px-5 py-2 transition-colors duration-200"
+                    >
+                        Login
+                    </a>
                 </div>
             </div>
 
@@ -101,27 +101,26 @@ export default function Header() {
                 <ul className="flex flex-col p-4 space-y-4">
                     {menuItems.map((item) => (
                         <li key={item.menu}>
-                            <button
+                            <a
                                 onClick={() => {
-                                    if (item.link === "#") {
-                                        window.scrollTo({ top: 0, behavior: "smooth" });
-                                    } else {
-                                        const target = document.querySelector(item.link);
-                                        if (target) {
-                                            window.scrollTo({
-                                                top: (target as HTMLElement).offsetTop - 128,
-                                                behavior: "smooth",
-                                            });
-                                        }
-                                    }
                                     setIsOpen(false);
                                 }}
+                                href={item.link}
                                 className="block w-full text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
                             >
                                 {item.menu}
-                            </button>
+                            </a>
                         </li>
                     ))}
+                    {/* Tambahin Login di Mobile */}
+                    <li>
+                        <a
+                            href={webRoute.login}
+                            className="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-full px-5 py-2 transition-colors duration-200"
+                        >
+                            Login
+                        </a>
+                    </li>
                 </ul>
             </div>
         </header>

@@ -97,8 +97,8 @@ export default function Footer() {
             </div>
 
             {/* Footer Bottom */}
-            <div className="border-t border-gray-700 mt-8 pt-6 text-center text-xs text-gray-500">
-                © {new Date().getFullYear()} Pojok Kamera. Semua hak cipta dilindungi.
+            <div className="border-t border-gray-700 py-6 text-center text-xs text-gray-500">
+                © {new Date().getFullYear()} Pojok Kamera by Andreas. Semua hak cipta dilindungi.
             </div>
         </footer>
     );

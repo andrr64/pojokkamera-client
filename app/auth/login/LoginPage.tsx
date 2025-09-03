@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +59,8 @@ export default function LoginPage() {
               <input
                 type="checkbox"
                 className="w-4 h-4 rounded border-blue-600 text-blue-600 focus:ring-blue-600"
-                defaultChecked
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
               />
               <span className="text-gray-900 dark:text-gray-200 text-xs font-normal">
                 Ingat saya
