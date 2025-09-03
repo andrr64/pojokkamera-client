@@ -6,7 +6,7 @@ import { FiSun, FiMoon } from "react-icons/fi";
 
 // Menu navigasi khusus Pojok Kamera
 const menuItems = [
-    { menu: "Beranda", link: "#" },
+    { menu: "Beranda", link: "/" },
     { menu: "Lensa & Kamera", link: "#section-gear" },
     { menu: "Galeri", link: "#section-gallery" },
     { menu: "Tips & Artikel", link: "#section-articles" },
@@ -34,7 +34,7 @@ export default function Header() {
                         />
                     )} */}
                     <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
-                        Pojok Kamera
+                        LOGO
                     </span>
                 </a>
 
@@ -43,26 +43,12 @@ export default function Header() {
                     <ul className="font-medium flex space-x-8">
                         {menuItems.map((item) => (
                             <li key={item.menu}>
-                                <button
-                                    onClick={() => {
-                                        if (item.link === "#") {
-                                            window.scrollTo({ top: 0, behavior: "smooth" });
-                                        } else {
-                                            const target = document.querySelector(item.link);
-                                            if (target) {
-                                                window.scrollTo({
-                                                    top: (target as HTMLElement).offsetTop - 128,
-                                                    behavior: "smooth",
-                                                });
-                                            }
-                                        }
-                                        setIsOpen(false);
-                                    }}
+                                <a href={item.link}
                                     className="relative text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group"
                                 >
                                     {item.menu}
                                     <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-500 dark:bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
-                                </button>
+                                </a>
                             </li>
                         ))}
                     </ul>
