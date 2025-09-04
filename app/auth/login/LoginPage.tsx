@@ -10,12 +10,15 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Data login:', { email, password });
+    console.log('Data login:', { email, password, remember });
     alert(`Login berhasil dengan email: ${email}`);
   };
 
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6 py-24 transition-colors duration-300">
+    <main
+      suppressHydrationWarning
+      className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6 py-8 transition-colors duration-300"
+    >
       {/* Card Form */}
       <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg transition-colors duration-300">
         {/* Logo */}
@@ -77,7 +80,7 @@ export default function LoginPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full mt-2 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-full px-6 py-3 transition-colors duration-200"
+            className="w-full mt-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm rounded-full px-6 py-3 transition-colors duration-200"
           >
             Masuk
           </button>
@@ -88,7 +91,7 @@ export default function LoginPage() {
           Belum punya akun?{' '}
           <a
             href={webRoute.register}
-            className="text-green-600 dark:text-green-400 font-semibold hover:underline"
+            className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
           >
             Daftar
           </a>
