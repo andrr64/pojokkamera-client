@@ -2,8 +2,10 @@
 
 import LoadingOverlay from '@/app/components/LoadingOverlay';
 import { AuthService } from '@/lib/api/user/auth.service';
+import { useFetchState } from '@/lib/hooks/fetchState';
 import { webRoute } from '@/route/web_route';
-import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -11,24 +13,30 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  // Bisa dipanggil beberapa kali, misal fetchLogin, fetchUser, dsb.
+  const fetchLogin = useFetchState();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    setLoading(true);
-    const result = await AuthService.login({ email, password });
-    setLoading(false);
 
-
-    if (!result.success) {
-      toast.error(result.detail);
-    } else {
-
+    const result = await fetchLogin.fetchData(
+      () => AuthService.login({ email, password })
+    );
+    if (result.success) {
+      toast.success('Login berhasil');
+      router.push(webRoute.home);
     }
-    
   };
+
+  useEffect(() => {
+    if (fetchLogin.error){
+      toast.error(fetchLogin.error);
+    }
+  }, [fetchLogin.error]);
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -36,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <LoadingOverlay visible={loading} />
+      <LoadingOverlay visible={fetchLogin.loading } />
       <main
         suppressHydrationWarning
         className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6 py-8 transition-colors duration-300"
