@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/api_response";
 import { useCallback, useState } from "react";
 
-export function useFetchState() {
+export function useRestfulState() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
