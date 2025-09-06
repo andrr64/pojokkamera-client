@@ -1,14 +1,15 @@
 import { Metadata } from "next";
+import LoginPage from "./LoginPage";
+import AuthController from "../AuthPageController";
 
 export const metadata: Metadata = {
   title: "Pojok Kamera - Online Shop",
 };
 
-import React from 'react'
-import LoginPage from "./LoginPage";
-
 export default function Page() {
   return (
-    <LoginPage/>
-  )
+    <AuthController>
+      <LoginPage />
+    </AuthController>
+  );
 }

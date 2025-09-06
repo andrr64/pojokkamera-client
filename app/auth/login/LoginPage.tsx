@@ -2,7 +2,8 @@
 
 import LoadingOverlay from '@/app/components/LoadingOverlay';
 import { AuthService } from '@/lib/api/user/auth.service';
-import { useFetchState } from '@/lib/hooks/fetchState';
+import { useRestfulState } from '@/lib/hooks/restfulState';
+import { useUserPersist } from '@/lib/hooks/userPersistState';
 import { webRoute } from '@/route/web_route';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -14,10 +15,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const userPersist = useUserPersist();
+
   const router = useRouter();
 
   // Bisa dipanggil beberapa kali, misal fetchLogin, fetchUser, dsb.
-  const fetchLogin = useFetchState();
+  const fetchLogin = useRestfulState();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,14 +28,23 @@ export default function LoginPage() {
     const result = await fetchLogin.fetchData(
       () => AuthService.login({ email, password })
     );
-    if (result.success) {
+    if (result.success && result.data) {
+      userPersist.setUsername(result.data.username!!);
+      userPersist.setNamaLengkap(result.data.namaLengkap!!);
+
       toast.success('Login berhasil');
       router.push(webRoute.home);
     }
   };
 
   useEffect(() => {
-    if (fetchLogin.error){
+    if (!userPersist.isEmpty()) {
+      router.push(webRoute.home);
+    }
+  }, [userPersist])
+
+  useEffect(() => {
+    if (fetchLogin.error) {
       toast.error(fetchLogin.error);
     }
   }, [fetchLogin.error]);
@@ -44,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <LoadingOverlay visible={fetchLogin.loading } />
+      <LoadingOverlay visible={fetchLogin.loading} />
       <main
         suppressHydrationWarning
         className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6 py-8 transition-colors duration-300"

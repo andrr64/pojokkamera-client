@@ -2,9 +2,10 @@
 
 import LoadingOverlay from '@/app/components/LoadingOverlay';
 import { AuthService } from '@/lib/api/user/auth.service';
+import { useRestfulState } from '@/lib/hooks/restfulState';
 import { webRoute } from '@/route/web_route';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -19,38 +20,40 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const postRegister = useRestfulState();
   const navigate = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (password !== konfirmasiPassword) {
       toast.error('Password dan konfirmasi password tidak sama!');
       return;
     }
-    setLoading(true);
-    const result = await AuthService.register(
-      {
-        username,
-        password,
-        email,
-        namaLengkap
-      }
+    const result = await postRegister.fetchData(
+      () => AuthService.register(
+        {
+          username,
+          password,
+          email,
+          namaLengkap
+        }
+      )
     )
-    setLoading(false);
     if (result.success) {
       toast.success(result.detail);
       navigate.push(webRoute.login);
-    } else {
-      toast.error(result.detail);
-    }
-
+    } 
   };
+
+  useEffect(() => {
+    if (postRegister.error){
+      toast.error(postRegister.error);
+    }
+  }, [postRegister.error])
 
   return (
     <>
-      <LoadingOverlay visible={loading}/>
+      <LoadingOverlay visible={postRegister.loading} />
       <div className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6 py-8 transition-colors duration-300">
         <div className="w-full max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg transition-colors duration-300">
           {/* Logo */}

@@ -6,9 +6,12 @@ export const metadata: Metadata = {
 
 import React from 'react'
 import RegisterPage from "./RegisterPage";
+import AuthController from "../AuthPageController";
 
 export default function Page() {
   return (
-    <RegisterPage/>
+    <AuthController>
+      <RegisterPage />
+    </AuthController>
   )
 }
