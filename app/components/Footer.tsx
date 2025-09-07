@@ -20,7 +20,7 @@ const legalLinks = [
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-900 text-gray-300 transition-colors duration-300">
+        <footer className="bg-gray-900 border-t border-gray-700 text-gray-300 transition-colors duration-300">
             <div className="max-w-[1200px] mx-auto px-6 py-12 flex flex-col md:flex-row md:justify-between md:items-start gap-12 md:gap-0">
 
                 {/* Logo & Deskripsi */}
@@ -97,7 +97,7 @@ export default function Footer() {
             </div>
 
             {/* Footer Bottom */}
-            <div className="border-t border-gray-700 py-6 text-center text-xs text-gray-500">
+            <div className="py-6 text-center text-xs text-gray-500">
                 © {new Date().getFullYear()} Pojok Kamera by Andreas. Semua hak cipta dilindungi.
             </div>
         </footer>
